@@ -1,5 +1,6 @@
 package com.pennapps.calmer;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,19 +25,22 @@ import java.util.List;
 public class HeartbeatTrackingService extends WearableListenerService implements SensorEventListener {
     private SensorManager mSensorManager;
     private int currentValue=0;
-    private static final String LOG_TAG = "MyHeart";
-    private IBinder binder = new HeartbeatServiceBinder();
-    private OnChangeListener onChangeListener;
+    private static final String LOG_TAG = "WearService";
+    //private IBinder binder = new HeartbeatServiceBinder();
+    //private OnChangeListener onChangeListener;
     private GoogleApiClient mGoogleApiClient;
 
+    /*
     // interface to pass a heartbeat value to the implementing class
     public interface OnChangeListener {
         void onValueChanged(int newValue);
     }
+    */
 
     /**
      * Binder for this service. The binding activity passes a listener we send the heartbeat to.
      */
+    /*
     public class HeartbeatServiceBinder extends Binder {
         public void setChangeListener(OnChangeListener listener) {
             onChangeListener = listener;
@@ -45,13 +49,27 @@ public class HeartbeatTrackingService extends WearableListenerService implements
         }
 
     }
-
+    */
 
 //    @Override
 //    public IBinder onBind(Intent intent) {
 //        return binder;
 //    }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // register us as a sensor listener
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
+        // delay SENSOR_DELAY_UI is sufficient
+        boolean res = mSensorManager.registerListener(this, mHeartRateSensor,  SensorManager.SENSOR_DELAY_UI);
+        Log.d(LOG_TAG, " sensor registered: " + (res ? "yes" : "no"));
+        mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
+        mGoogleApiClient.connect();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    /*
     @Override
     public void onCreate() {
         super.onCreate();
@@ -61,15 +79,17 @@ public class HeartbeatTrackingService extends WearableListenerService implements
         // delay SENSOR_DELAY_UI is sufficiant
         boolean res = mSensorManager.registerListener(this, mHeartRateSensor,  SensorManager.SENSOR_DELAY_UI);
         Log.d(LOG_TAG, " sensor registered: " + (res ? "yes" : "no"));
-
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
         mGoogleApiClient.connect();
+
     }
+    */
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mSensorManager.unregisterListener(this);
+        mGoogleApiClient.disconnect();
         Log.d(LOG_TAG, " sensor unregistered");
     }
 
@@ -84,12 +104,16 @@ public class HeartbeatTrackingService extends WearableListenerService implements
                 // save the new value
                 currentValue = newValue;
                 Log.d(LOG_TAG,"grabbed new value: " + newValue);
+                sendMessageToHandheld(Integer.toString(newValue));
+
+                /*
                 // send the value to the listener
                 if(onChangeListener!=null) {
                     Log.d(LOG_TAG,"sending new value to listener: " + newValue);
                     onChangeListener.onValueChanged(newValue);
                     sendMessageToHandheld(Integer.toString(newValue));
                 }
+                */
             }
         }
     }
