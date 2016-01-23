@@ -24,10 +24,13 @@ import com.parse.Parse;
 
 public class MainHomeActivity extends Activity {
 
-    private static final String TAG = "PhoneActivity";
-    protected GoogleApiClient mGoogleApiClient;
+    private static final String TAG = "CalmerPhoneActivity";
+
     private Switch onOffSwitch;
     private TextView bpmText;
+    private GoogleApiClient mGoogleApiClient;
+    Intent intent;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -48,29 +51,18 @@ public class MainHomeActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         bpmText = (TextView) findViewById(R.id.heartbeat);
-        onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);
-        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Intent intent = new Intent(getApplicationContext(), MainDataListenerService.class);
-                if (isChecked) {
-                    mGoogleApiClient.connect();
-                    startService(intent);
-                } else {
-                    mGoogleApiClient.disconnect();
-                    stopService(intent);
-                }
-            }
-        });
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
 
+        intent = new Intent(getApplicationContext(), MainDataListenerService.class);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle connectionHint) {
                         Log.d(TAG, "onConnected: " + connectionHint);
                     }
+
                     @Override
                     public void onConnectionSuspended(int cause) {
                         Log.d(TAG, "onConnectionSuspended: " + cause);
@@ -85,7 +77,29 @@ public class MainHomeActivity extends Activity {
                 .addApi(Wearable.API)
                 .build();
 
+        onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.d(TAG, "trying to start service");
+                    startService(intent);
+                    mGoogleApiClient.connect();
+                } else {
+                    Log.d(TAG, "trying to disconnect service");
+                    mGoogleApiClient.disconnect();
+                    stopService(intent);
+                }
+            }
+        });
 
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopService(intent);
+        Log.d(TAG, "trying to destroy service");
     }
 
     @Override
