@@ -1,36 +1,58 @@
 package com.pennapps.calmer;
 
+import android.app.Service;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.WearableListenerService;
-
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;
+import com.parse.ParseObject;
 
 /**
  * Created by QingxiaoDong on 1/23/16.
  */
-public class DataLayerListenerService extends WearableListenerService {
+public class MainDataListenerService extends WearableListenerService {
+    private boolean isMainServiceOn = false;
     private static final String LOG_TAG = "WearableListener";
     public static final String HEARTBEAT = "HEARTBEAT";
 
     private static Handler handler;
     private static int currentValue=0;
 
+    private int bpmBufferSize = 20;
+    private int[] bpmBuffer = new int[bpmBufferSize];
+    private int bpmBufferIndex = 0;
+
+
+    public MainDataListenerService() {}
+    public boolean getServiceStatus() {
+        return isMainServiceOn;
+    }
     public static Handler getHandler() {
         return handler;
     }
 
     public static void setHandler(Handler handler) {
-        DataLayerListenerService.handler = handler;
+        MainDataListenerService.handler = handler;
         // send current value as initial value.
         if(handler!=null)
             handler.sendEmptyMessage(currentValue);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        isMainServiceOn = true;
+        // We want this service to continue running until it is explicitly
+        // stopped, so return sticky.
+        return Service.START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isMainServiceOn = false;
     }
 
     @Override
@@ -48,9 +70,28 @@ public class DataLayerListenerService extends WearableListenerService {
         Log.d(LOG_TAG, "received a message from wear: " + messageEvent.getPath());
         // save the new heartbeat value
         currentValue = Integer.parseInt(messageEvent.getPath());
+        //updateBpmBuffer(currentValue);
         if(handler!=null) {
             // if a handler is registered, send the value as new message
             handler.sendEmptyMessage(currentValue);
+        }
+    }
+
+    private void updateBpmBuffer(int value) {
+        if (bpmBufferIndex < bpmBufferSize - 1) {
+            bpmBuffer[bpmBufferIndex] = value;
+            bpmBufferIndex++;
+        } else {
+
+            //buffer is filled, time to upload to Parse!
+            ParseObject obj = new ParseObject("BPM");
+            obj.put("BPMData", bpmBuffer);
+            obj.saveInBackground();
+
+            bpmBufferIndex = 0;
+            bpmBuffer = new int[bpmBufferSize];
+            bpmBuffer[bpmBufferIndex] = value;
+            bpmBufferIndex++;
         }
     }
 

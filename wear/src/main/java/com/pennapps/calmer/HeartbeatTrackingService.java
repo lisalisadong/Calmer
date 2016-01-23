@@ -1,5 +1,6 @@
 package com.pennapps.calmer;
 
+import android.app.Service;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -66,7 +67,7 @@ public class HeartbeatTrackingService extends WearableListenerService implements
         Log.d(LOG_TAG, " sensor registered: " + (res ? "yes" : "no"));
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
         mGoogleApiClient.connect();
-        return super.onStartCommand(intent, flags, startId);
+        return Service.START_STICKY;
     }
 
     /*
@@ -99,11 +100,11 @@ public class HeartbeatTrackingService extends WearableListenerService implements
         if(sensorEvent.sensor.getType()==Sensor.TYPE_HEART_RATE && sensorEvent.values.length>0 ) {
             int newValue = Math.round(sensorEvent.values[0]);
             //Log.d(LOG_TAG,sensorEvent.sensor.getName() + " changed to: " + newValue);
-            // only do something if the value differs from the value before and the value is not 0.
-            if(currentValue != newValue && newValue!=0) {
+            // only do something if the value is not 0.
+            if(newValue!=0) {
                 // save the new value
                 currentValue = newValue;
-                Log.d(LOG_TAG,"grabbed new value: " + newValue);
+                Log.d(LOG_TAG,"grabbed value: " + newValue);
                 sendMessageToHandheld(Integer.toString(newValue));
 
                 /*

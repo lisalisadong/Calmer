@@ -4,6 +4,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Wearable;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -18,7 +20,7 @@ import android.hardware.Sensor;
 /**
  * Created by QingxiaoDong on 1/23/16.
  */
-public class HeartbeatListenerActivity extends Activity implements SensorEventListener  {
+public class HeartbeatListenerActivity extends Activity  {
 
     private static final String LOG_TAG = "MyHeart";
 
@@ -26,28 +28,13 @@ public class HeartbeatListenerActivity extends Activity implements SensorEventLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_display);
 
+        Intent intent = new Intent(getApplicationContext(), HeartbeatTrackingService.class);
+        startService(intent);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_HEART_RATE) {
-            //TODO: do something here
-        }
-    }
 
 
 }

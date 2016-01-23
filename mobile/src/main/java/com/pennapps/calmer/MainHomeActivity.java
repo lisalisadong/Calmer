@@ -1,45 +1,66 @@
 package com.pennapps.calmer;
 
 import android.app.Activity;
+import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Wearable;
 
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 
-public class MainActivity extends Activity {
+public class MainHomeActivity extends Activity {
 
     private static final String TAG = "PhoneActivity";
     protected GoogleApiClient mGoogleApiClient;
-    private TextView textView;
+    private Switch onOffSwitch;
+    private TextView bpmText;
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             // message from API client! message from wear! The contents is the heartbeat.
 
-            if(textView!=null)
-                textView.setText(Integer.toString(msg.what));
+            if(bpmText!=null)
+                bpmText.setText(Integer.toString(msg.what));
 
         }
     };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.heartbeat);
+        bpmText = (TextView) findViewById(R.id.heartbeat);
+        onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Intent intent = new Intent(getApplicationContext(), MainDataListenerService.class);
+                if (isChecked) {
+                    mGoogleApiClient.connect();
+                    startService(intent);
+                } else {
+                    mGoogleApiClient.disconnect();
+                    stopService(intent);
+                }
+            }
+        });
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(this);
@@ -63,18 +84,8 @@ public class MainActivity extends Activity {
                 })
                 .addApi(Wearable.API)
                 .build();
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -103,13 +114,13 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         // register our handler with the DataLayerService. This ensures we get messages whenever the service receives something.
-        DataLayerListenerService.setHandler(handler);
+        MainDataListenerService.setHandler(handler);
     }
 
     @Override
     protected void onPause() {
         // unregister our handler so the service does not need to send its messages anywhere.
-        DataLayerListenerService.setHandler(null);
+        MainDataListenerService.setHandler(null);
         super.onPause();
     }
 }
