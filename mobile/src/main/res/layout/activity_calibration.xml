@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="#ffffff"
         android:inputType="textMultiLine"
-        android:text="Please do jumpingjacks for 30 seconds. Below is an instruction of standard jumping jacks. When you are ready to start, please press the start button."
+        android:text="Please do jumpingjacks for 30 seconds. Below is an instruction of standard jumping jacks. When you finish, please press the start button for us to detect your excited heartrate."
         android:layout_gravity="center_vertical|center_horizontal"
         android:autoText="false"
         android:gravity="left|right"
@@ -33,7 +33,7 @@
         android:textSize="18sp"
         app:cpb_textComplete="Complete"
         app:cpb_textError="Error"
-        app:cpb_textIdle="Calibrate"
+        app:cpb_textIdle="Start"
         android:layout_gravity="center"/>
 
 </LinearLayout>
