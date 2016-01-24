@@ -41,7 +41,11 @@
         </activity>
         <activity
             android:name=".UserProfileActivity"
-            android:label="@string/title_activity_user_profile" >
+            android:label="User Profile" >
+        </activity>
+        <activity
+            android:name=".ViewCurrentHeartrateActivity"
+            android:label="Heart Rate" >
         </activity>
 
         <service android:name=".MainDataListenerService" >
@@ -56,7 +60,6 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="AQLBUXcT4El6kXDHAh1MUmzrl45wTb2yZ4ltpAR8" />
-
 
         <meta-data
             android:name="com.google.android.gms.version"
