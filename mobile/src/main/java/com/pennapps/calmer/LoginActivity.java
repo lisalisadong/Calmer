@@ -114,12 +114,12 @@ public class LoginActivity extends AppCompatActivity {
                  else if (user != null && !user.getBoolean("emailVerified")){
                     // email verified
                     Toast.makeText(getApplicationContext(),
-                            "Please verify your email first before logging in",
+                            "Please verify your email before logging in.",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     // Signup failed
                     Toast.makeText(getApplicationContext(),
-                            "Your username or password did not match.",
+                            "Your username or password did not match our record.",
                             Toast.LENGTH_SHORT).show();
                 }
         }

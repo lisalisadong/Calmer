@@ -72,10 +72,12 @@ public class RegistrationActivity extends AppCompatActivity {
                         @Override
                         public void done(ParseException e) {
                             if (e == null) {        //Sign up succeeded
+                                Toast.makeText(getApplicationContext(),  "Thank you for signing up. Please verify your email before logging in.",
+                                        Toast.LENGTH_SHORT).show();
                                 startLoginActivity();
 
                             } else {                // Sign up didn't succeed.
-                                Toast.makeText(getApplicationContext(), e.toString(),
+                                Toast.makeText(getApplicationContext(),  "Registration failed. Please try a different email address.",
                                         Toast.LENGTH_SHORT).show();
                                 Log.d("ahhh",e.toString());
                             }
