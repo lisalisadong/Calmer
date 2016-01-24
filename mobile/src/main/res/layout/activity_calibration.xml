@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/instruction"
+        android:paddingTop="25dp"
+        android:layout_width="334dp"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:inputType="textMultiLine"
+        android:text="Please do jumpingjacks for 30 seconds. Below is an instruction of standard jumping jacks. When you are ready to start, please press the start button."
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:autoText="false"
+        android:gravity="left|right"
+        android:textStyle="normal" />
+
+    <ImageView
+        android:id="@+id/gif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"/>
+
+    <com.dd.CircularProgressButton
+        android:id="@+id/startButton"
+        android:layout_width="196dp"
+        android:layout_height="64dp"
+        android:layout_below="@+id/gif"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:cpb_textComplete="@string/Complete"
+        app:cpb_textError="@string/Error"
+        app:cpb_textIdle="@string/Start" />
+
+</LinearLayout>
