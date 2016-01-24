@@ -60,7 +60,8 @@
         android:id="@+id/findTrendButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="170dp" />
+        android:layout_marginBottom="170dp"
+        android:textColor="@color/actionbar" />
 
 
 
@@ -88,6 +89,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="135dp"
-        android:textColor="#FFFFFF" />
+        android:textColor="@android:color/white"/>
 
 </RelativeLayout>
