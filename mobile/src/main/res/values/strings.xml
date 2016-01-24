@@ -274,4 +274,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_view_current_heartrate">ViewCurrentHeartrateActivity</string>
+    <string name="title_activity_view_trends">ViewTrendsActivity</string>
+    <string name="title_activity_data_plot">DataPlotActivity</string>
 </resources>

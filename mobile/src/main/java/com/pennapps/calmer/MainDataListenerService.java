@@ -34,13 +34,14 @@ public class MainDataListenerService extends WearableListenerService implements 
     private static Handler handler;
     private static int currentValue=0;
 
-    private final int bpmBufferSize = 20;
+    private final int bpmBufferSize = 60;
     private List<Integer> bpmBuffer = new ArrayList<>();
     private int bpmBufferIndex = 0;
 
     private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
     private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
+    private User user;
 
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
@@ -60,6 +61,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         ((Calmer) this.getApplication()).setMainServiceStatus(true);
+        user = new User();
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
 
@@ -93,7 +95,7 @@ public class MainDataListenerService extends WearableListenerService implements 
 
         //if the service is "on"
         if (((Calmer) this.getApplication()).getMainServiceStatus()) {
-            if (currentValue >= 90 && currentValue <= 93) {
+            if (currentValue > user.getExcitedBPM()) {
                 sendNotification();
             }
             updateBpmBuffer(currentValue);
@@ -114,12 +116,12 @@ public class MainDataListenerService extends WearableListenerService implements 
 
                 ParseObject obj = ParseObject.create("BPM");
                 obj.put("BPMData", bpmBuffer);
-                obj.put("user", ParseUser.getCurrentUser());
+                obj.put("username", ParseUser.getCurrentUser().getUsername());
                 obj.saveInBackground();
                 Log.d(LOG_TAG, "uploaded data to Parse");
             }
             catch (Exception e) {
-                Log.d(LOG_TAG, e.toString());
+                Log.d(LOG_TAG, e.getMessage());
             }
 
             bpmBufferIndex = 0;
