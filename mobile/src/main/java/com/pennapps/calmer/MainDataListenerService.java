@@ -90,10 +90,12 @@ public class MainDataListenerService extends WearableListenerService implements 
         Log.d(LOG_TAG, "received a message from wear: " + messageEvent.getPath());
         // save the new heartbeat value
         currentValue = Integer.parseInt(messageEvent.getPath());
-        if (currentValue >= 90 && currentValue <= 93) {
-            sendNotification();
-        }
+
+        //if the service is "on"
         if (((Calmer) this.getApplication()).getMainServiceStatus()) {
+            if (currentValue >= 90 && currentValue <= 93) {
+                sendNotification();
+            }
             updateBpmBuffer(currentValue);
             if (handler != null) {
                 // if a handler is registered, send the value as new message

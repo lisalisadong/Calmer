@@ -12,7 +12,7 @@
         android:text="Heart Rate"
         android:id="@+id/heartrateStaticText"
         android:layout_gravity="center_horizontal|top"
-        android:textSize="115dp"
+        android:textSize="100dp"
         android:textColor="#FFFFFF"
         android:layout_above="@+id/heartrateTextView"
         android:layout_centerHorizontal="true" />
