@@ -42,7 +42,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
     static boolean calibrating = false;
-    static int calibrationCounter = 0;
+    private int calibrationCounter = 0;
     private int calibrationSum = 0;
     private User user;
 
@@ -123,6 +123,7 @@ public class MainDataListenerService extends WearableListenerService implements 
                 user = (User) ParseUser.getCurrentUser();
                 user.setExcitedBPM(calibrationSum / calibrationCounter);
                 user.saveInBackground();
+                calibrating = false;
                 Log.d(LOG_TAG, "uploaded active bpm to parse");
             }
             catch (Exception e) {
