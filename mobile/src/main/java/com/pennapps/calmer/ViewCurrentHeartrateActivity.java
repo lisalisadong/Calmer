@@ -24,8 +24,6 @@ public class ViewCurrentHeartrateActivity extends AppCompatActivity {
 
     private TextView bpmText;
     private TextView heartrateStaticText;
-    private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
-    private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
 
     private Handler handler = new Handler() {
@@ -35,9 +33,7 @@ public class ViewCurrentHeartrateActivity extends AppCompatActivity {
 
             if(bpmText!=null)
                 bpmText.setText(Integer.toString(msg.what));
-            if (msg.what >= 90 && msg.what <= 93) {
-                sendNotification();
-            }
+
         }
     };
 
@@ -82,37 +78,37 @@ public class ViewCurrentHeartrateActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendNotification() {
-        Random random = new Random();
-        int titlePicker = random.nextInt(3);
-        int textPicker = random.nextInt(3);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getApplicationContext())
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(TITLES[titlePicker])
-                        .setContentText(TEXTS[textPicker]);
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(getApplicationContext(), MainHomeActivity.class);
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainHomeActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        int mId = 0;
-        mNotificationManager.notify(mId, mBuilder.build());
-    }
+//    private void sendNotification() {
+//        Random random = new Random();
+//        int titlePicker = random.nextInt(3);
+//        int textPicker = random.nextInt(3);
+//        NotificationCompat.Builder mBuilder =
+//                new NotificationCompat.Builder(getApplicationContext())
+//                        .setSmallIcon(R.mipmap.ic_launcher)
+//                        .setContentTitle(TITLES[titlePicker])
+//                        .setContentText(TEXTS[textPicker]);
+//        // Creates an explicit intent for an Activity in your app
+//        Intent resultIntent = new Intent(getApplicationContext(), MainHomeActivity.class);
+//
+//        // The stack builder object will contain an artificial back stack for the
+//        // started Activity.
+//        // This ensures that navigating backward from the Activity leads out of
+//        // your application to the Home screen.
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+//        // Adds the back stack for the Intent (but not the Intent itself)
+//        stackBuilder.addParentStack(MainHomeActivity.class);
+//        // Adds the Intent that starts the Activity to the top of the stack
+//        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent =
+//                stackBuilder.getPendingIntent(
+//                        0,
+//                        PendingIntent.FLAG_UPDATE_CURRENT
+//                );
+//        mBuilder.setContentIntent(resultPendingIntent);
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        // mId allows you to update the notification later on.
+//        int mId = 0;
+//        mNotificationManager.notify(mId, mBuilder.build());
+//    }
 }

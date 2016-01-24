@@ -1,8 +1,13 @@
 package com.pennapps.calmer;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.android.gms.wearable.MessageApi;
@@ -16,6 +21,7 @@ import com.parse.ParseUser;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by QingxiaoDong on 1/23/16.
@@ -31,6 +37,10 @@ public class MainDataListenerService extends WearableListenerService implements 
     private final int bpmBufferSize = 20;
     private List<Integer> bpmBuffer = new ArrayList<>();
     private int bpmBufferIndex = 0;
+
+    private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
+    private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
+
 
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
@@ -80,7 +90,9 @@ public class MainDataListenerService extends WearableListenerService implements 
         Log.d(LOG_TAG, "received a message from wear: " + messageEvent.getPath());
         // save the new heartbeat value
         currentValue = Integer.parseInt(messageEvent.getPath());
-
+        if (currentValue >= 90 && currentValue <= 93) {
+            sendNotification();
+        }
         if (((Calmer) this.getApplication()).getMainServiceStatus()) {
             updateBpmBuffer(currentValue);
             if (handler != null) {
@@ -135,4 +147,38 @@ public class MainDataListenerService extends WearableListenerService implements 
         }
     }
     */
+
+    private void sendNotification() {
+        Random random = new Random();
+        int titlePicker = random.nextInt(3);
+        int textPicker = random.nextInt(3);
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getApplicationContext())
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(TITLES[titlePicker])
+                        .setContentText(TEXTS[textPicker]);
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(getApplicationContext(), MainHomeActivity.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainHomeActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        int mId = 0;
+        mNotificationManager.notify(mId, mBuilder.build());
+    }
 }
