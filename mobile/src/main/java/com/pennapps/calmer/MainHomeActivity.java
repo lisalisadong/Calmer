@@ -27,7 +27,8 @@ import android.content.Context;
 import android.app.NotificationManager;
 
 import java.util.Random;
-
+import com.parse.ParseQuery;
+import com.parse.ParseObject;
 
 public class MainHomeActivity extends Activity {
 
@@ -38,7 +39,7 @@ public class MainHomeActivity extends Activity {
     private GoogleApiClient mGoogleApiClient;
     Intent intent;
     private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
-    private final String[] TEXTS = new String[] {"Have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
+    private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
 
     private Handler handler = new Handler() {
