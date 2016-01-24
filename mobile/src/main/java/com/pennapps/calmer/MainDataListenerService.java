@@ -11,32 +11,25 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.WearableListenerService;
 import com.parse.ParseObject;
 import com.google.android.gms.common.api.GoogleApiClient;
-import android.os.Bundle;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.wearable.Wearable;
+import com.parse.ParseUser;
 
 /**
  * Created by QingxiaoDong on 1/23/16.
  */
 public class MainDataListenerService extends WearableListenerService implements MessageApi.MessageListener{
-    private boolean isMainServiceOn = false;
+
     private static final String LOG_TAG = "CalmerPhoneService";
     public static final String HEARTBEAT = "HEARTBEAT";
 
     private static Handler handler;
     private static int currentValue=0;
 
-    private int bpmBufferSize = 20;
+    private final int bpmBufferSize = 20;
     private int[] bpmBuffer = new int[bpmBufferSize];
     private int bpmBufferIndex = 0;
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
 
-
-    public MainDataListenerService() {}
-    public boolean getServiceStatus() {
-        return isMainServiceOn;
-    }
     public static Handler getHandler() {
         return handler;
     }
@@ -46,11 +39,12 @@ public class MainDataListenerService extends WearableListenerService implements 
         // send current value as initial value.
         if(handler!=null)
             handler.sendEmptyMessage(currentValue);
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        isMainServiceOn = true;
+        ((Calmer) this.getApplication()).setMainServiceStatus(true);
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
 
@@ -62,7 +56,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        isMainServiceOn = false;
+        ((Calmer) this.getApplication()).setMainServiceStatus(false);
         Log.d(LOG_TAG, "service destroyed");
     }
 
@@ -81,10 +75,13 @@ public class MainDataListenerService extends WearableListenerService implements 
         Log.d(LOG_TAG, "received a message from wear: " + messageEvent.getPath());
         // save the new heartbeat value
         currentValue = Integer.parseInt(messageEvent.getPath());
-        //updateBpmBuffer(currentValue);
-        if(handler!=null) {
-            // if a handler is registered, send the value as new message
-            handler.sendEmptyMessage(currentValue);
+
+        if (((Calmer) this.getApplication()).getMainServiceStatus()) {
+            updateBpmBuffer(currentValue);
+            if (handler != null) {
+                // if a handler is registered, send the value as new message
+                handler.sendEmptyMessage(currentValue);
+            }
         }
     }
 
@@ -93,10 +90,10 @@ public class MainDataListenerService extends WearableListenerService implements 
             bpmBuffer[bpmBufferIndex] = value;
             bpmBufferIndex++;
         } else {
-
             //buffer is filled, time to upload to Parse!
             ParseObject obj = new ParseObject("BPM");
             obj.put("BPMData", bpmBuffer);
+            obj.put("user", ParseUser.getCurrentUser());
             obj.saveInBackground();
 
             bpmBufferIndex = 0;
