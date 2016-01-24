@@ -111,6 +111,8 @@ public class MainHomeActivity extends Activity {
 //    }
 
     private void configureButtons() {
+        Typeface sansFont = Typeface.createFromAsset(getAssets(), "FiraSans-Regular.otf");
+
         calibrationButton = (Button) findViewById(R.id.calibrationButton);
         calibrationButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -119,7 +121,9 @@ public class MainHomeActivity extends Activity {
                 startActivity(intent);
             }
         });
+        calibrationButton.setTypeface(sansFont);
         viewHeartrateButton = (Button) findViewById(R.id.viewHeartrateButton);
+        viewHeartrateButton.setTypeface(sansFont);
         viewHeartrateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +132,14 @@ public class MainHomeActivity extends Activity {
             }
         });
         viewTrendsButton = (Button) findViewById(R.id.viewTrendsButton);
+        viewTrendsButton.setTypeface(sansFont);
+        viewTrendsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ViewTrendsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void configureWearableApi() {

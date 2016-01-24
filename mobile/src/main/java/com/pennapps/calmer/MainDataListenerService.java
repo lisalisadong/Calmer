@@ -34,7 +34,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     private static Handler handler;
     private static int currentValue=0;
 
-    private final int bpmBufferSize = 20;
+    private final int bpmBufferSize = 60;
     private List<Integer> bpmBuffer = new ArrayList<>();
     private int bpmBufferIndex = 0;
 
@@ -44,6 +44,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     static boolean calibrating = false;
     static int calibrationCounter = 0;
     private int calibrationSum = 0;
+    private User user;
 
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
@@ -63,6 +64,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         ((Calmer) this.getApplication()).setMainServiceStatus(true);
+        user = new User();
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
 
@@ -93,10 +95,12 @@ public class MainDataListenerService extends WearableListenerService implements 
         Log.d(LOG_TAG, "received a message from wear: " + messageEvent.getPath());
         // save the new heartbeat value
         currentValue = Integer.parseInt(messageEvent.getPath());
-        if (currentValue >= 90 && currentValue <= 93) {
-            sendNotification();
-        }
+
+        //if the service is "on"
         if (((Calmer) this.getApplication()).getMainServiceStatus()) {
+            if (currentValue > user.getExcitedBPM()) {
+                sendNotification();
+            }
             updateBpmBuffer(currentValue);
             if (calibrating) {
                 calibrate(currentValue);
@@ -116,8 +120,8 @@ public class MainDataListenerService extends WearableListenerService implements 
             calibrationCounter++;
         } else {
             try {
-                User user = (User) ParseUser.getCurrentUser();
-                user.setActiveBPM(calibrationSum / calibrationCounter);
+                user = (User) ParseUser.getCurrentUser();
+                user.setExcitedBPM(calibrationSum / calibrationCounter);
                 user.saveInBackground();
                 Log.d(LOG_TAG, "uploaded active bpm to parse");
             }
@@ -138,12 +142,12 @@ public class MainDataListenerService extends WearableListenerService implements 
 
                 ParseObject obj = ParseObject.create("BPM");
                 obj.put("BPMData", bpmBuffer);
-                obj.put("user", ParseUser.getCurrentUser());
+                obj.put("username", ParseUser.getCurrentUser().getUsername());
                 obj.saveInBackground();
                 Log.d(LOG_TAG, "uploaded data to Parse");
             }
             catch (Exception e) {
-                Log.d(LOG_TAG, e.toString());
+                Log.d(LOG_TAG, e.getMessage());
             }
 
             bpmBufferIndex = 0;

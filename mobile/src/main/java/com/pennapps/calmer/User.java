@@ -19,29 +19,20 @@ public class User extends ParseUser {
         super.put("email", email);
     }
 
-    public Integer getStandingBPM() {
-        return getInt("standingBPM");
+    public Integer getRestingBPM() {
+        return getInt("restingBPM");
     }
 
-    public void setStandingBPM(Integer n) {
-        put("standingBPM", n);
+    public void setRestingBPM(int n) {
+        put("restingBPM", n);
     }
 
-    public Integer getSittingBPM() {
-        return getInt("sittingBPM");
+    public Integer getExcitedBPM() {
+        return getInt("ExcitedBPM");
     }
 
-    public void setSittingBPM(Integer n) {
-        put("sittingBPM", n);
-    }
-
-
-    public Integer getActiveBPM() {
-        return getInt("activeBPM");
-    }
-
-    public void setActiveBPM(Integer n) {
-        put("activeBPM", n);
+    public void setExcitedBPM(Integer n) {
+        put("ExcitedBPM", n);
     }
 
     public String getUserName() {

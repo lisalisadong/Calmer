@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-public class ViewCurrentHeartrateActivity extends AppCompatActivity {
+public class ViewCurrentHeartrateActivity extends Activity {
 
     private TextView bpmText;
     private TextView heartrateStaticText;
@@ -41,10 +41,10 @@ public class ViewCurrentHeartrateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_current_heartrate);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setLogo(R.mipmap.ic_launcher);
-        actionBar.setDisplayUseLogoEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setLogo(R.mipmap.ic_launcher);
+//        actionBar.setDisplayUseLogoEnabled(true);
+//        actionBar.setDisplayShowHomeEnabled(true);
 
         heartrateStaticText = (TextView) findViewById(R.id.heartrateStaticText);
         Typeface font = Typeface.createFromAsset(getBaseContext().getAssets(), "CanelaBarkPersonal.ttf");

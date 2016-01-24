@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ap="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.pennapps.calmer.ViewTrendsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/startDateTextView"
+        android:clickable="true"
+        android:background="@android:drawable/list_selector_background"
+        android:onClick="showStartDatePickerDialog"
+        android:layout_above="@+id/endDateTextView"
+        android:layout_alignStart="@+id/endDateTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/endDateTextView"
+        android:clickable="true"
+        android:background="@android:drawable/list_selector_background"
+        android:onClick="showEndDatePickerDialog"
+        android:layout_above="@+id/findTrendButton"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/startTimeTextView"
+        android:clickable="true"
+        android:background="@android:drawable/list_selector_background"
+        android:onClick="showStartTimePickerDialog"
+        android:layout_above="@+id/endTimeTextView"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/endTimeTextView"
+        android:layout_alignTop="@+id/endDateTextView"
+        android:layout_alignStart="@+id/startTimeTextView"
+        android:clickable="true"
+        android:background="@android:drawable/list_selector_background"
+        android:onClick="showEndTimePickerDialog" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Trend"
+        android:id="@+id/findTrendButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="170dp" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date From:"
+        android:id="@+id/textView"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date To:"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/startTimeTextView"
+        android:layout_alignEnd="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trends"
+        android:id="@+id/trendsTitleTextView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="135dp"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>

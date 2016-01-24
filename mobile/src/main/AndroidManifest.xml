@@ -58,7 +58,8 @@
             </intent-filter>
         </service>
 
-        <!--<meta-data
+        <!--
+        <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="TZwcUfExXMmc52um2z9ZHqPuACi6QBYYE7rUHatf" />
         <meta-data
@@ -67,8 +68,17 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />-->
+            android:value="@integer/google_play_services_version" />
+        -->
 
+        <activity
+            android:name=".ViewTrendsActivity"
+            android:label="@string/title_activity_view_trends" >
+        </activity>
+        <activity
+            android:name=".DataPlotActivity"
+            android:label="@string/title_activity_data_plot" >
+        </activity>
     </application>
 
 </manifest>

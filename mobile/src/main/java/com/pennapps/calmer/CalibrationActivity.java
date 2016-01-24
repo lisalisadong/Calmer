@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.dd.CircularProgressButton;
 import android.view.View;
 import android.util.Log;
+import java.io.IOException;
+import java.io.InputStream;
+import android.webkit.WebView;
 
 import android.os.Handler;
 /**
@@ -30,6 +33,16 @@ public class CalibrationActivity extends AppCompatActivity{
         actionBar.setLogo(R.mipmap.ic_launcher);
         actionBar.setDisplayUseLogoEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+//        InputStream stream = null;
+//        try {
+//            stream = getAssets().open("piggy.gif");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        WebView view = new WebView(this, "file:///android_asset    /piggy.gif");
+//
+//        setContentView(view);
 
         circularProgressButton = (CircularProgressButton) findViewById(R.id.btnWithText);
         circularProgressButton.setIndeterminateProgressMode(true);

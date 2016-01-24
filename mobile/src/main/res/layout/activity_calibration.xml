@@ -3,15 +3,37 @@
     android:orientation="vertical" android:layout_width="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/instruction"
+        android:paddingTop="25dp"
+        android:layout_width="334dp"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:inputType="textMultiLine"
+        android:text="Please do jumpingjacks for 30 seconds. Below is an instruction of standard jumping jacks. When you are ready to start, please press the start button."
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:autoText="false"
+        android:gravity="left|right"
+        android:textStyle="normal" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gif"
+        android:layout_width="240dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/jumpingjack"/>
+
     <com.dd.CircularProgressButton
         android:id="@+id/btnWithText"
         android:layout_width="196dp"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
-        android:textColor="@color/text"
+        android:textColor="@android:color/white"
         android:textSize="18sp"
         app:cpb_textComplete="Complete"
         app:cpb_textError="Error"
-        app:cpb_textIdle="Upload" />
+        app:cpb_textIdle="Calibrate"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
