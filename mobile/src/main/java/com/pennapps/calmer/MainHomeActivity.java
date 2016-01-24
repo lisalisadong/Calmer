@@ -112,6 +112,13 @@ public class MainHomeActivity extends Activity {
 
     private void configureButtons() {
         calibrationButton = (Button) findViewById(R.id.calibrationButton);
+        calibrationButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CalibrationActivity.class);
+                startActivity(intent);
+            }
+        });
         viewHeartrateButton = (Button) findViewById(R.id.viewHeartrateButton);
         viewHeartrateButton.setOnClickListener(new View.OnClickListener() {
             @Override

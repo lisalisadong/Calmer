@@ -41,6 +41,9 @@ public class MainDataListenerService extends WearableListenerService implements 
     private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
     private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
+    static boolean calibrating = false;
+    static int calibrationCounter = 0;
+    private int calibrationSum = 0;
 
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
@@ -95,11 +98,34 @@ public class MainDataListenerService extends WearableListenerService implements 
         }
         if (((Calmer) this.getApplication()).getMainServiceStatus()) {
             updateBpmBuffer(currentValue);
+            if (calibrating) {
+                calibrate(currentValue);
+            }
+            Log.d(LOG_TAG, "calibrating: " + calibrating);
+            Log.d(LOG_TAG, "counter: " + calibrationCounter);
             if (handler != null) {
                 // if a handler is registered, send the value as new message
                 handler.sendEmptyMessage(currentValue);
             }
         }
+    }
+
+    private void calibrate(int value) {
+        if (calibrationCounter < 50) {
+            calibrationSum += value;
+            calibrationCounter++;
+        } else {
+            try {
+                User user = (User) ParseUser.getCurrentUser();
+                user.setActiveBPM(calibrationSum / calibrationCounter);
+                user.saveInBackground();
+                Log.d(LOG_TAG, "uploaded active bpm to parse");
+            }
+            catch (Exception e) {
+                Log.d(LOG_TAG, e.toString());
+            }
+        }
+
     }
 
     private void updateBpmBuffer(int value) {

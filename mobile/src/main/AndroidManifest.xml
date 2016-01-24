@@ -47,6 +47,10 @@
             android:name=".ViewCurrentHeartrateActivity"
             android:label="Heart Rate" >
         </activity>
+        <activity
+            android:name=".CalibrationActivity"
+            android:label="Calibration" >
+        </activity>
 
         <service android:name=".MainDataListenerService" >
             <intent-filter>
