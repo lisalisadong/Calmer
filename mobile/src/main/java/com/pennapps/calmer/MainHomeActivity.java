@@ -20,14 +20,26 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Wearable;
 
 import com.parse.Parse;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.app.NotificationManager;
+
+import java.util.Random;
 
 
 public class MainHomeActivity extends Activity {
 
-    private static final String TAG = "PhoneActivity";
-    protected GoogleApiClient mGoogleApiClient;
+    private static final String TAG = "CalmerPhoneActivity";
+
     private Switch onOffSwitch;
     private TextView bpmText;
+    private GoogleApiClient mGoogleApiClient;
+    Intent intent;
+    private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
+    private final String[] TEXTS = new String[] {"Have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
+
 
     private Handler handler = new Handler() {
         @Override
@@ -37,6 +49,39 @@ public class MainHomeActivity extends Activity {
             if(bpmText!=null)
                 bpmText.setText(Integer.toString(msg.what));
 
+            if (msg.what >= 90 && msg.what <= 93) {
+                Random random = new Random();
+                int titlePicker = random.nextInt(3);
+                int textPicker = random.nextInt(3);
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(getApplicationContext())
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle(TITLES[titlePicker])
+                                .setContentText(TEXTS[textPicker]);
+                // Creates an explicit intent for an Activity in your app
+                Intent resultIntent = new Intent(getApplicationContext(), MainHomeActivity.class);
+
+                // The stack builder object will contain an artificial back stack for the
+                // started Activity.
+                // This ensures that navigating backward from the Activity leads out of
+                // your application to the Home screen.
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+                // Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(MainHomeActivity.class);
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                NotificationManager mNotificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                // mId allows you to update the notification later on.
+                int mId = 0;
+                mNotificationManager.notify(mId, mBuilder.build());
+            }
         }
     };
 
@@ -48,26 +93,18 @@ public class MainHomeActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         bpmText = (TextView) findViewById(R.id.heartbeat);
-        onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);
-        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Intent intent = new Intent(getApplicationContext(), MainDataListenerService.class);
-                if (isChecked) {
-                    mGoogleApiClient.connect();
-                    startService(intent);
-                } else {
-                    mGoogleApiClient.disconnect();
-                    stopService(intent);
-                }
-            }
-        });
 
+        // Parse.enableLocalDatastore(this);
+        // Parse.initialize(this);
+
+        intent = new Intent(getApplicationContext(), MainDataListenerService.class);
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(Bundle connectionHint) {
                         Log.d(TAG, "onConnected: " + connectionHint);
                     }
+
                     @Override
                     public void onConnectionSuspended(int cause) {
                         Log.d(TAG, "onConnectionSuspended: " + cause);
@@ -82,7 +119,29 @@ public class MainHomeActivity extends Activity {
                 .addApi(Wearable.API)
                 .build();
 
+        onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.d(TAG, "trying to start service");
+                    startService(intent);
+                    mGoogleApiClient.connect();
+                } else {
+                    Log.d(TAG, "trying to disconnect service");
+                    mGoogleApiClient.disconnect();
+                    stopService(intent);
+                }
+            }
+        });
 
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopService(intent);
+        Log.d(TAG, "trying to destroy service");
     }
 
 //    @Override

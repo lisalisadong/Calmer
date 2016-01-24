@@ -5,17 +5,22 @@ import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.WearableListenerService;
 import com.parse.ParseObject;
+import com.google.android.gms.common.api.GoogleApiClient;
+import android.os.Bundle;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.wearable.Wearable;
 
 /**
  * Created by QingxiaoDong on 1/23/16.
  */
-public class MainDataListenerService extends WearableListenerService {
+public class MainDataListenerService extends WearableListenerService implements MessageApi.MessageListener{
     private boolean isMainServiceOn = false;
-    private static final String LOG_TAG = "WearableListener";
+    private static final String LOG_TAG = "CalmerPhoneService";
     public static final String HEARTBEAT = "HEARTBEAT";
 
     private static Handler handler;
@@ -24,6 +29,8 @@ public class MainDataListenerService extends WearableListenerService {
     private int bpmBufferSize = 20;
     private int[] bpmBuffer = new int[bpmBufferSize];
     private int bpmBufferIndex = 0;
+    protected GoogleApiClient mGoogleApiClient;
+    //protected MessageApi.MessageListener messageListener;
 
 
     public MainDataListenerService() {}
@@ -46,6 +53,9 @@ public class MainDataListenerService extends WearableListenerService {
         isMainServiceOn = true;
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
+
+        //Wearable.MessageApi.addListener(mGoogleApiClient, messageListener);
+        Log.d(LOG_TAG, "Started service");
         return Service.START_STICKY;
     }
 
@@ -53,6 +63,7 @@ public class MainDataListenerService extends WearableListenerService {
     public void onDestroy() {
         super.onDestroy();
         isMainServiceOn = false;
+        Log.d(LOG_TAG, "service destroyed");
     }
 
     @Override
