@@ -25,40 +25,25 @@
             <!-- Year of Birth Label -->
 
             <!-- Email Label -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="#000000"
-                android:textSize="20dp"/>
-
             <EditText
+                android:paddingTop="100dp"
                 android:id="@+id/emailLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="#F8F8FF"
-                android:hint="Your email will also be your username"
-                android:inputType="textEmailAddress"
-                android:textSize="15dp"/>
-
-            <!-- Password Label -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textColor="#000000"
-                android:textSize="20dp"/>
+                android:ems="10"
+                android:hint="Email (email will also be your username)"
+                android:inputType="textEmailAddress"/>
 
             <EditText
                 android:id="@+id/passwordText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F8F8FF"
                 android:clickable="false"
                 android:inputType="textPassword"
-                android:password="true"
-                android:textSize="15dp"/>
+                android:hint="Password"
+                android:ems="10"
+                android:password="true"/>
 
 
             <!-- Practice Setting Label -->

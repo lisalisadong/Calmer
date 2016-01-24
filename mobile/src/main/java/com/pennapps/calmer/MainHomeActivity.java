@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,12 +26,12 @@ import android.support.v4.app.TaskStackBuilder;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.app.NotificationManager;
-
+import android.support.v7.app.AppCompatActivity;
 import java.util.Random;
 import com.parse.ParseQuery;
 import com.parse.ParseObject;
 
-public class MainHomeActivity extends Activity {
+public class MainHomeActivity extends AppCompatActivity {
 
     private static final String TAG = "CalmerPhoneActivity";
 
@@ -93,6 +94,11 @@ public class MainHomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setLogo(R.mipmap.ic_launcher);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
         bpmText = (TextView) findViewById(R.id.heartbeat);
 
         // Parse.enableLocalDatastore(this);
@@ -145,12 +151,12 @@ public class MainHomeActivity extends Activity {
         Log.d(TAG, "trying to destroy service");
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
