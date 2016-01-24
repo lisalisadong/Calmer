@@ -55,8 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:background="@color/actionbar"
-        android:textColor="@color/text"
+        android:textColor="@color/actionbar"
         android:text="Log In"
         android:textStyle="bold"
         android:id="@+id/signInButton" />
@@ -67,8 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Sign Up"
-        android:background="@color/actionbar"
-        android:textColor="@color/text"
+        android:textColor="@color/actionbar"
         android:textStyle="bold"
         android:id="@+id/registerButton" />
 </LinearLayout>

@@ -13,6 +13,10 @@ import com.parse.ParseObject;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.ParseUser;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Created by QingxiaoDong on 1/23/16.
  */
@@ -25,8 +29,9 @@ public class MainDataListenerService extends WearableListenerService implements 
     private static int currentValue=0;
 
     private final int bpmBufferSize = 20;
-    private int[] bpmBuffer = new int[bpmBufferSize];
+    private List<Integer> bpmBuffer = new ArrayList<>();
     private int bpmBufferIndex = 0;
+
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
 
@@ -87,18 +92,25 @@ public class MainDataListenerService extends WearableListenerService implements 
 
     private void updateBpmBuffer(int value) {
         if (bpmBufferIndex < bpmBufferSize - 1) {
-            bpmBuffer[bpmBufferIndex] = value;
+            bpmBuffer.add(value);
             bpmBufferIndex++;
         } else {
             //buffer is filled, time to upload to Parse!
-            ParseObject obj = new ParseObject("BPM");
-            obj.put("BPMData", bpmBuffer);
-            obj.put("user", ParseUser.getCurrentUser());
-            obj.saveInBackground();
+            try {
+
+                ParseObject obj = ParseObject.create("BPM");
+                obj.put("BPMData", bpmBuffer);
+                obj.put("user", ParseUser.getCurrentUser());
+                obj.saveInBackground();
+                Log.d(LOG_TAG, "uploaded data to Parse");
+            }
+            catch (Exception e) {
+                Log.d(LOG_TAG, e.toString());
+            }
 
             bpmBufferIndex = 0;
-            bpmBuffer = new int[bpmBufferSize];
-            bpmBuffer[bpmBufferIndex] = value;
+            bpmBuffer = new ArrayList<>();
+            bpmBuffer.add(value);
             bpmBufferIndex++;
         }
     }

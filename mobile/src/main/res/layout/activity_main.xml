@@ -15,7 +15,7 @@
         android:enabled="true" />
 
     <TextView
-
+        android:paddingTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calmly"
@@ -52,6 +52,7 @@
             android:id="@+id/viewTrendsButton"
             android:layout_below="@+id/viewHeartrateButton"
             android:layout_alignStart="@+id/viewHeartrateButton" />
+
     </RelativeLayout>
 
 </FrameLayout>

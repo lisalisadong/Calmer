@@ -34,7 +34,7 @@ import java.util.Random;
 import com.parse.ParseQuery;
 import com.parse.ParseObject;
 
-public class MainHomeActivity extends AppCompatActivity {
+public class MainHomeActivity extends Activity {
 
     private static final String TAG = "CalmerPhoneActivity";
 
@@ -47,8 +47,6 @@ public class MainHomeActivity extends AppCompatActivity {
     private Button viewTrendsButton;
     private Calmer calmer;
 
-    private final String[] TITLES = new String[] {"Hmmmmm", "Hey", "I think..."};
-    private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
 
     private Handler handler = new Handler() {
@@ -56,9 +54,9 @@ public class MainHomeActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             // message from API client! message from wear! The contents is the heartbeat.
 
-            if (msg.what >= 90 && msg.what <= 93) {
-                sendNotification();
-            }
+//            if (msg.what >= 90 && msg.what <= 93) {
+//                sendNotification();
+//            }
         }
     };
 
@@ -97,20 +95,20 @@ public class MainHomeActivity extends AppCompatActivity {
 //        return true;
 //    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void configureButtons() {
         calibrationButton = (Button) findViewById(R.id.calibrationButton);
@@ -168,45 +166,11 @@ public class MainHomeActivity extends AppCompatActivity {
         });
     }
 
-    private void sendNotification() {
-        Random random = new Random();
-        int titlePicker = random.nextInt(3);
-        int textPicker = random.nextInt(3);
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getApplicationContext())
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(TITLES[titlePicker])
-                        .setContentText(TEXTS[textPicker]);
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(getApplicationContext(), MainHomeActivity.class);
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MainHomeActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        int mId = 0;
-        mNotificationManager.notify(mId, mBuilder.build());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
 
 }

@@ -49,11 +49,15 @@
             <!-- Practice Setting Label -->
 
             <Button
+                style="?android:textAppearanceSmall"
                 android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Register"/>
+                android:text="Register"
+                android:textColor="@color/actionbar"
+                android:textStyle="bold"/>
+
 
         </LinearLayout>
     </ScrollView>
