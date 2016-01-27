@@ -106,8 +106,8 @@ public class MainDataListenerService extends WearableListenerService implements 
             if (calibrating) {
                 calibrate(currentValue);
             }
-            Log.d(LOG_TAG, "calibrating: " + calibrating);
-            Log.d(LOG_TAG, "counter: " + calibrationCounter);
+            //Log.d(LOG_TAG, "calibrating: " + calibrating);
+            //Log.d(LOG_TAG, "counter: " + calibrationCounter);
             if (handler != null) {
                 // if a handler is registered, send the value as new message
                 handler.sendEmptyMessage(currentValue);

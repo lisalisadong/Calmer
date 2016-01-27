@@ -113,13 +113,20 @@ public class MainHomeActivity extends Activity {
 
     private void configureButtons() {
         Typeface sansFont = Typeface.createFromAsset(getAssets(), "FiraSans-Regular.otf");
+        onOffSwitch = (Switch) findViewById(R.id.onOffSwitch);
 
         calibrationButton = (Button) findViewById(R.id.calibrationButton);
         calibrationButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CalibrationActivity.class);
-                startActivityForResult(intent, CALIBRATION_REQUEST);
+                if (!onOffSwitch.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            "You have to turn the switch on to calibrate.",
+                            Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), CalibrationActivity.class);
+                    startActivityForResult(intent, CALIBRATION_REQUEST);
+                }
             }
         });
         calibrationButton.setTypeface(sansFont);

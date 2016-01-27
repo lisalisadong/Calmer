@@ -30,6 +30,10 @@
         android:layout_gravity="center">
 
         <Button
+            style="?android:textAppearanceSmall"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/actionbar"
+            android:textStyle="bold"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Calibration"
@@ -38,6 +42,10 @@
             android:layout_centerHorizontal="true" />
 
         <Button
+            style="?android:textAppearanceSmall"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/actionbar"
+            android:textStyle="bold"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="View Heart Rate"
@@ -46,6 +54,10 @@
             android:layout_alignStart="@+id/calibrationButton" />
 
         <Button
+            style="?android:textAppearanceSmall"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/actionbar"
+            android:textStyle="bold"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="View Trends"
