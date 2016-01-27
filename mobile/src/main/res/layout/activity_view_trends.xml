@@ -15,10 +15,13 @@
         android:text="New Text"
         android:id="@+id/startDateTextView"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:textColor="@color/actionbar"
+        android:background="@color/text"
         android:onClick="showStartDatePickerDialog"
         android:layout_above="@+id/endDateTextView"
-        android:layout_alignStart="@+id/endDateTextView" />
+        android:layout_alignStart="@+id/endDateTextView"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,10 +29,13 @@
         android:text="New Text"
         android:id="@+id/endDateTextView"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:textColor="@color/actionbar"
+        android:background="@color/text"
         android:onClick="showEndDatePickerDialog"
         android:layout_above="@+id/findTrendButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,10 +43,13 @@
         android:text="New Text"
         android:id="@+id/startTimeTextView"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
+        android:textColor="@color/actionbar"
+        android:background="@color/text"
         android:onClick="showStartTimePickerDialog"
         android:layout_above="@+id/endTimeTextView"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,8 +59,11 @@
         android:layout_alignTop="@+id/endDateTextView"
         android:layout_alignStart="@+id/startTimeTextView"
         android:clickable="true"
-        android:background="@android:drawable/list_selector_background"
-        android:onClick="showEndTimePickerDialog" />
+        android:textColor="@color/actionbar"
+        android:background="@color/text"
+        android:onClick="showEndTimePickerDialog"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -59,9 +71,10 @@
         android:text="Find Trend"
         android:id="@+id/findTrendButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="170dp"
-        android:textColor="@color/actionbar" />
+        android:textColor="@color/actionbar"
+        android:layout_marginTop="4dp"/>
 
 
 
@@ -71,7 +84,9 @@
         android:text="Date From:"
         android:id="@+id/textView"
         android:layout_above="@+id/textView2"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,7 +94,9 @@
         android:text="Date To:"
         android:id="@+id/textView2"
         android:layout_below="@+id/startTimeTextView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignEnd="@+id/textView"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"/>
 
     <TextView
         android:layout_width="wrap_content"
