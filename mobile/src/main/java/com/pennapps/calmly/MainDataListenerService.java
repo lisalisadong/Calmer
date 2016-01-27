@@ -45,6 +45,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     static int calibrationCounter = 0;
     private int calibrationSum = 0;
     private User user;
+    static boolean connected = false;
 
     protected GoogleApiClient mGoogleApiClient;
     //protected MessageApi.MessageListener messageListener;
@@ -93,6 +94,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     public void onMessageReceived(MessageEvent messageEvent) {
         super.onMessageReceived(messageEvent);
         Log.d(LOG_TAG, "received a message from wear: " + messageEvent.getPath());
+        connected = true;
         // save the new heartbeat value
         currentValue = Integer.parseInt(messageEvent.getPath());
 

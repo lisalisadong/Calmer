@@ -163,6 +163,13 @@ public class MainHomeActivity extends Activity {
         onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    if (MainDataListenerService.connected == false) {
+                        onOffSwitch.setChecked(false);
+                        Toast.makeText(getApplicationContext(),
+                                "It seems that your watch is not ready.",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     Log.d(TAG, "trying to start service");
                     calmly.setMainServiceStatus(true);
                     startService(intent);
