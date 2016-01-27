@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
@@ -42,7 +43,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     private final String[] TEXTS = new String[] {"You should have a rest :)", "Don't be too serious =)", "You might need to calm down :|"};
 
     static boolean calibrating = false;
-    private int calibrationCounter = 0;
+    static int calibrationCounter = 0;
     private int calibrationSum = 0;
     private User user;
 
@@ -115,7 +116,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     }
 
     private void calibrate(int value) {
-        if (calibrationCounter < 50) {
+        if (calibrationCounter < 20) {
             calibrationSum += value;
             calibrationCounter++;
         } else {
@@ -123,8 +124,13 @@ public class MainDataListenerService extends WearableListenerService implements 
                 user = (User) ParseUser.getCurrentUser();
                 user.setExcitedBPM(calibrationSum / calibrationCounter);
                 user.saveInBackground();
+                Toast.makeText(getApplicationContext(),
+                        "Your excited heart rate is updated to " + calibrationSum / calibrationCounter + " bpm.",
+                        Toast.LENGTH_LONG).show();
                 calibrating = false;
+                calibrationCounter = 0;
                 Log.d(LOG_TAG, "uploaded active bpm to parse");
+
             }
             catch (Exception e) {
                 Log.d(LOG_TAG, e.toString());

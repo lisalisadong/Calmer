@@ -20,7 +20,7 @@ import android.os.Handler;
  */
 public class CalibrationActivity extends AppCompatActivity{
 
-    static final int timer = 300000 ;
+    static final int timer = 20;
     boolean active ;
     CircularProgressButton circularProgressButton;
     private Handler mHandler = new Handler();
@@ -46,6 +46,7 @@ public class CalibrationActivity extends AppCompatActivity{
 
         circularProgressButton = (CircularProgressButton) findViewById(R.id.btnWithText);
         circularProgressButton.setIndeterminateProgressMode(true);
+        circularProgressButton.setProgress(0);
         circularProgressButton.setOnClickListener(new View.OnClickListener() {
         //@Override
         //public void onClick(View v) {
@@ -57,29 +58,34 @@ public class CalibrationActivity extends AppCompatActivity{
 //                }
             @Override
             public void onClick (View v) {
-                MainDataListenerService.calibrating = true;
-                new Thread(new Runnable() {
-                    public void run() {
-                        active = true;
-                        try {
-                            waited = 0;
-                            while (active && waited < timer) {
-                                // sleep(200);
-                                if (active) {
-                                    waited += 1;
-                                    mHandler.post(new Runnable() {
-                                        public void run() {
-                                            updateProgress(waited);
-                                        }
-                                    });
+                if (circularProgressButton.getProgress() == 0) {
+                    MainDataListenerService.calibrating = true;
+                    new Thread(new Runnable() {
+                        public void run() {
+                            active = true;
+                            try {
+                                waited = MainDataListenerService.calibrationCounter;
+                                while (active && waited < timer) {
+                                    // sleep(200);
+                                    if (active) {
+                                        waited = MainDataListenerService.calibrationCounter;
+                                        mHandler.post(new Runnable() {
+                                            public void run() {
+                                                updateProgress(waited);
+                                            }
+                                        });
+                                    }
                                 }
+                            } catch (Exception e) {
+                            } finally {
+                                onContinue();
                             }
-                        } catch (Exception e) {
-                        } finally {
-                            onContinue();
                         }
-                    }
-                }).start();
+                    }).start();
+                }
+                if (circularProgressButton.getProgress() == 100) {
+                    finish();
+                }
             }
         });
     }
@@ -92,7 +98,7 @@ public class CalibrationActivity extends AppCompatActivity{
 
     public void updateProgress(final int timePassed) {
         if (circularProgressButton != null) {
-            final int progress = 100 * timePassed / timer;
+            final int progress = 100 *  timePassed / timer;
             circularProgressButton.setProgress(progress);
         }
     }

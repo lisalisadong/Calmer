@@ -127,7 +127,7 @@ public class HeartbeatTrackingService extends WearableListenerService implements
             //Log.d(LOG_TAG, "length of sensor value: " + sensorEvent.values.length);
             Random random = new Random();
             int newValue = Math.round(sensorEvent.values[0]);
-            newValue = newValue - 15 + random.nextInt(5);
+            newValue = newValue - 5 + random.nextInt(5);
             //int newValue = random.nextInt(10) + 85;
             //Log.d(LOG_TAG,sensorEvent.sensor.getName() + " changed to: " + newValue);
             // only do something if the value is not 0.

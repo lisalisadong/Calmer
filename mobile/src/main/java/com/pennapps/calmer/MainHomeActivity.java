@@ -46,6 +46,7 @@ public class MainHomeActivity extends Activity {
     private Button viewHeartrateButton;
     private Button viewTrendsButton;
     private Calmer calmer;
+    private int CALIBRATION_REQUEST = 0;
 
 
 
@@ -118,7 +119,7 @@ public class MainHomeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CalibrationActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, CALIBRATION_REQUEST);
             }
         });
         calibrationButton.setTypeface(sansFont);
