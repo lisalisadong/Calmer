@@ -1,4 +1,8 @@
-# Calmly - PennApps XIII Hackathon
+# Calmly
+
+[PennAppsXIII Hackathon Devpost Page](http://devpost.com/software/calmly)
+
+Screenshots, details and demo are available [here](https://lisalisadong.github.io/).
 
 ##Inspiration
 Further bridging the gap between tech and social life ;).
