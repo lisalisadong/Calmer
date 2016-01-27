@@ -1,4 +1,4 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 
 import com.parse.ParseObject;
@@ -7,10 +7,7 @@ import com.parse.ParseUser;
 
 import org.json.JSONArray;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 

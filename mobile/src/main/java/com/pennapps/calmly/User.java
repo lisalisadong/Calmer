@@ -1,4 +1,4 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 import com.parse.ParseClassName;
 import com.parse.ParseUser;

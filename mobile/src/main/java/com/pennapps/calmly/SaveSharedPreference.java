@@ -1,4 +1,4 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 import android.content.Context;
 import android.content.SharedPreferences;

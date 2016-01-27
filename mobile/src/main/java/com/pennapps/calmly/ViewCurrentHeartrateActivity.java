@@ -1,24 +1,11 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
-
-import java.util.Random;
 
 public class ViewCurrentHeartrateActivity extends Activity {
 

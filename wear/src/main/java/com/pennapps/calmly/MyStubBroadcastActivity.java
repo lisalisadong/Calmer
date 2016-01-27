@@ -1,4 +1,4 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ public class MyStubBroadcastActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         Intent i = new Intent();
-        i.setAction("com.pennapps.calmer.SHOW_NOTIFICATION");
+        i.setAction("com.pennapps.calmly.SHOW_NOTIFICATION");
         i.putExtra(MyPostNotificationReceiver.CONTENT_KEY, getString(R.string.title));
         sendBroadcast(i);
         finish();

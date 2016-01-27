@@ -1,11 +1,10 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
-import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
 
-public class Calmer extends android.app.Application {
+public class Calmly extends android.app.Application {
     private boolean isMainServiceOn;
 
     private final String applicationID = "TZwcUfExXMmc52um2z9ZHqPuACi6QBYYE7rUHatf";

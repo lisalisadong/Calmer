@@ -1,18 +1,14 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+
 import com.dd.CircularProgressButton;
 import android.view.View;
 import android.util.Log;
-import java.io.IOException;
-import java.io.InputStream;
-import android.webkit.WebView;
 
 import android.os.Handler;
 /**

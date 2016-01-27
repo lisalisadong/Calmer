@@ -1,4 +1,4 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,7 +19,6 @@ import com.parse.ParseObject;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.ParseUser;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
@@ -64,7 +63,7 @@ public class MainDataListenerService extends WearableListenerService implements 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        ((Calmer) this.getApplication()).setMainServiceStatus(true);
+        ((Calmly) this.getApplication()).setMainServiceStatus(true);
         user = new User();
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
@@ -77,7 +76,7 @@ public class MainDataListenerService extends WearableListenerService implements 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((Calmer) this.getApplication()).setMainServiceStatus(false);
+        ((Calmly) this.getApplication()).setMainServiceStatus(false);
         Log.d(LOG_TAG, "service destroyed");
     }
 
@@ -98,7 +97,7 @@ public class MainDataListenerService extends WearableListenerService implements 
         currentValue = Integer.parseInt(messageEvent.getPath());
 
         //if the service is "on"
-        if (((Calmer) this.getApplication()).getMainServiceStatus()) {
+        if (((Calmly) this.getApplication()).getMainServiceStatus()) {
             if (currentValue > user.getExcitedBPM()) {
                 sendNotification();
             }

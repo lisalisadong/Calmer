@@ -1,17 +1,12 @@
-package com.pennapps.calmer;
+package com.pennapps.calmly;
 
 import android.app.Activity;
-import android.app.Application;
-import android.app.Service;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -22,17 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Wearable;
-
-import com.parse.Parse;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.app.NotificationManager;
-import android.support.v7.app.AppCompatActivity;
-import java.util.Random;
-import com.parse.ParseQuery;
-import com.parse.ParseObject;
 
 public class MainHomeActivity extends Activity {
 
@@ -45,7 +29,7 @@ public class MainHomeActivity extends Activity {
     private Button calibrationButton;
     private Button viewHeartrateButton;
     private Button viewTrendsButton;
-    private Calmer calmer;
+    private Calmly calmly;
     private int CALIBRATION_REQUEST = 0;
 
 
@@ -67,7 +51,7 @@ public class MainHomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        calmer = (Calmer) this.getApplication();
+        calmly = (Calmly) this.getApplication();
         titleText = (TextView) findViewById(R.id.titleTextView);
         Typeface font = Typeface.createFromAsset(getAssets(), "CanelaBarkPersonal.ttf");
         titleText.setTypeface(font);
@@ -180,12 +164,12 @@ public class MainHomeActivity extends Activity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     Log.d(TAG, "trying to start service");
-                    calmer.setMainServiceStatus(true);
+                    calmly.setMainServiceStatus(true);
                     startService(intent);
                     mGoogleApiClient.connect();
                 } else {
                     Log.d(TAG, "trying to disconnect service");
-                    calmer.setMainServiceStatus(false);
+                    calmly.setMainServiceStatus(false);
                     stopService(intent);
                     mGoogleApiClient.disconnect();
                 }

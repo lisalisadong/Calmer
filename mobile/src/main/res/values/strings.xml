@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calmer</string>
+    <string name="app_name">Calmly</string>
 
     <string-array name="gender_array">
         <item>Male</item>
